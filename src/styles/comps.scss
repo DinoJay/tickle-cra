@@ -1,0 +1,263 @@
+.label {
+  @apply block text-gray-700 text-sm font-bold
+}
+
+// .border-btn {
+//   @apply .border-2 .border-black;
+// }
+
+.form-control {
+  @apply bg-white py-2 px-3 text-gray-700;
+}
+
+.form-label {
+  @apply block uppercase text-sm font-bold mb-2;
+}
+
+.form-input {
+  @apply appearance-none border-0 py-2 px-3 leading-tight;
+}
+
+.form-input:focus {
+  @apply outline-none shadow-outline;
+}
+
+.form-group {
+  @apply flex flex-col mb-4
+}
+
+
+.tag-label {
+  @apply py-1 px-1 font-bold flex items-center justify-center uppercase text-white bg-black;
+}
+
+
+.interact {
+  @apply font-bold cursor-pointer uppercase;
+}
+
+.btn {
+  @apply flex justify-center items-center interact text-center;
+  transition: border 0.2s ease-in-out;
+}
+
+.btn-invisible {
+  @apply cursor-pointer;
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+
+.btn-shadow {
+  @apply shadow border-2 border-black
+}
+
+.btn-red {
+  @apply btn shadow bg-red-500 border-2 border-black text-white;
+}
+
+
+.btn-green {
+  @apply btn shadow bg-green-500 border-2 border-black text-white;
+}
+
+// .btn-white {
+//   @apply .bg-white .text-xl;
+// }
+
+
+.header-black {
+  @apply py-2 px-2 bg-black font-bold text-white;
+}
+
+
+.btn:hover {
+  @apply bg-gray-400 text-white;
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+.btn-disabled {
+  @apply disabled;
+}
+
+.btn-disabled:hover {
+  @apply bg-white text-black;
+
+}
+
+.btn-lg {
+  @apply p-3;
+}
+
+.btn-active {
+  @apply bg-black text-white;
+}
+
+.btn-active-alt {
+  @apply bg-gray-400 text-white;
+}
+
+.bare {
+  @apply font-bold py-2 px-4 border-2 border-black;
+}
+
+.link {
+  @apply  no-underline font-bold;
+  transition: border 0.2s ease-in-out;
+  border-bottom: 2px solid transparent;
+}
+
+.link:hover {
+  border-color: theme('colors.black');
+}
+
+.nav-link {
+  color: #6a566b;
+}
+
+.nav-link.selected {
+  @apply bg-gray-100;
+}
+
+.sub-link {
+  @apply m-2 p-2;
+}
+
+.sub-link-selected {
+  @apply sub-link bg-gray-100;
+}
+
+
+.big-shadow {
+  box-shadow: theme('colors.black') 0.4rem 0.4rem;
+}
+
+.shadow {
+  box-shadow: theme('colors.black') 0.2rem 0.2rem;
+}
+
+.shadow-gray {
+  box-shadow: theme('colors.gray.500') 0.2rem 0.2rem;
+}
+
+
+.shadow-light-gray {
+  box-shadow: theme('colors.gray.400') 0.2rem 0.2rem;
+}
+
+
+.shadow-yellow {
+  box-shadow: theme('colors.yellow.500') 0.2rem 0.2rem;
+}
+
+.shadow-red {
+  box-shadow: theme('colors.red.500') 0.2rem 0.2rem;
+}
+
+.shadow-grey-light {
+  box-shadow: theme('colors.gray.100') 0.2rem 0.2rem;
+}
+
+.tag-btn {
+  @apply font-bold py-2 px-2 border-2 bg-gray-100;
+}
+
+
+.btn-black {
+  @apply bg-black text-white;
+}
+
+.btn-black:hover {
+  @apply bg-gray-400;
+}
+
+.list-item {
+  @apply mb-3 p-2 text-xl cursor-pointer
+}
+
+.list-item.active {
+  @apply bg-gray-100;
+}
+
+.alert {
+    @apply uppercase border-2 border-black shadow text-xl p-4;
+    // background-color: #f3aa3f;
+    color: white;
+    // opacity: 0.83;
+    transition: opacity 0.6s;
+
+}
+
+
+.text-truncate {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.border-left-black {
+  border-left-color: theme('colors.black');
+}
+
+.triangle-left {
+  width: 0;
+  height: 0;
+
+  border-top: 70px solid transparent;
+  // border-bottom: 60px solid transparent;
+  border-left-width: 70px;
+  border-left-style: solid;
+}
+
+.border-right-black {
+  border-right-color: theme('colors.black');
+}
+
+.triangle-right {
+  width: 0;
+  height: 0;
+  border-top: 70px solid transparent;
+  border-top-color: transparent;
+  // border-bottom: 60px solid transparent;
+  border-right-width: 70px;
+  border-right-style: solid;
+}
+
+
+.triangle-right-sm {
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent;
+  border-top-color: transparent;
+  // border-bottom: 60px solid transparent;
+  border-right-width: 50px;
+  border-right-style: solid;
+
+}
+
+.triangle-left-sm {
+  width: 0;
+  height: 0;
+  border-top-color: transparent;
+  border-left-width: 50px;
+  border-left-style: solid;
+
+}
+
+
+// .panel {
+//   width: 33vw;
+//   max-width: 400;
+//
+// }
+
+

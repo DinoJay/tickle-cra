@@ -1,0 +1,52 @@
+
+@screen sm {
+  // .content-container {
+  //   height: 100vh;
+  //   width: 100vw;
+  // }
+
+  .modal-m-auto {
+    @apply mx-auto;
+  }
+
+  // .force-map-pos {
+  //   position: fixed !important;
+  // }
+
+}
+
+@screen lg {
+  // .content-container {
+  //   height: 100vh;
+  //   width: 100vw;
+  // }
+
+  .modal-m-auto {
+    @apply mx-auto my-3;
+  }
+
+  // .force-map-pos {
+  //   position: fixed !important;
+  // }
+
+}
+
+@screen xl {
+  .modal-m-auto {
+    @apply m-auto my-3;
+  }
+
+  // .content-container {
+  //   height: 96vh;
+  //   width: 40vw;
+  //   min-width: 664px;
+  //   max-width: 1000px;
+  //   max-height: 1000px;
+  //   margin-top: 2vh;
+  //   margin-bottom: 2vh;
+  //   margin-left: auto;
+  //   margin-right: auto;
+  //   box-shadow: lightgrey 0.2rem 0.2rem;
+  //   border: 0.1rem solid lightgrey;
+  // }
+}

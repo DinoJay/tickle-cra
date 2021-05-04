@@ -1,0 +1,41 @@
+@screen sm {
+  .grid {
+    justify-content: center;
+    grid-gap: 16px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@screen md {
+  .grid {
+    justify-content: center;
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@screen lg {
+  .grid {
+    justify-content: center;
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@screen xl {
+  .grid {
+    justify-content: center;
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// .grid {
+//     justify-content: center;
+//     display: grid;
+//     grid-gap: 16px;
+//     grid-template-columns: 1fr;
+// }

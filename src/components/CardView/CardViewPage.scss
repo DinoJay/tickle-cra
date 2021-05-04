@@ -1,0 +1,15 @@
+.forceMapPos {
+  position: fixed !important;
+}
+
+@screen lg {
+  .forceMapPos {
+    position: absolute !important;
+  }
+}
+
+@screen xl {
+  .forceMapPos {
+    position: absolute !important;
+  }
+}

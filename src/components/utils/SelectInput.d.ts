@@ -1,0 +1,21 @@
+import React from 'react';
+declare const SelectInput: React.FC<{
+    className?: string;
+    inputClassName?: string;
+    liClassName?: string;
+    style?: React.CSSProperties;
+    onSelect: Function;
+    values: any[];
+    valueAcc: Function;
+    idAcc: Function;
+    placeholder: string;
+    onFocus?: Function;
+    onBlur?: Function;
+    value: string;
+    onInputChange: Function;
+    orientation?: string;
+    type?: string;
+    ulClassName?: string;
+    filterFn?: Function;
+}>;
+export default SelectInput;

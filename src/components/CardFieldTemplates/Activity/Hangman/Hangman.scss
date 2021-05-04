@@ -1,0 +1,8 @@
+input[type=checkbox].checkbox:checked + span {
+  @apply .underline;
+  font-style: normal;
+}
+
+.checkbox + span {
+  @apply .cursor-pointer;
+}

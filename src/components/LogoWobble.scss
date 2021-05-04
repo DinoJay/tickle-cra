@@ -1,0 +1,22 @@
+.wobble {
+  animation-duration: 1s;
+  animation-name: wob;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wob {
+  0% {
+    width: 70px;
+    height: 70px;
+  }
+
+  50% {
+    width: 150px;
+    height: 150px;
+  }
+
+  100% {
+    width: 70px;
+    height: 70px;
+  }
+}

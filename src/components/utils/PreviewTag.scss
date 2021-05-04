@@ -1,0 +1,31 @@
+.previewTag {
+  @apply relative cursor-pointer bg-white flex flex-col;
+  height: 6rem;
+  width: 6rem;
+}
+
+@screen md {
+    .previewTag {
+      height: 6rem;
+      width: 6rem;
+    }
+}
+
+@screen lg {
+    .previewTag {
+      height: 6rem;
+      width: 6rem;
+    }
+}
+
+@screen xl {
+  .previewTag {
+    height: 8rem;
+    width: 8rem;
+  }
+}
+
+
+.shadow {
+  box-shadow: theme('colors.gray.700') 0.3rem 0.3rem;
+}

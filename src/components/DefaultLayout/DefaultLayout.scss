@@ -1,0 +1,39 @@
+.helperCont {
+    @apply overflow-x-hidden;
+    max-height: 900px;
+    height: 96vh;
+    width: 700px;
+    min-width: 664px;
+    // max-width: 1000px;
+    // max-height: 1000px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: lightgrey 0.2rem 0.2rem;
+    border: 0.1rem solid lightgrey;
+  }
+
+
+
+@screen sm {
+  .contentContainer {
+    @apply overflow-x-hidden fixed;
+    height: 100%;
+    width: 100vw;
+  }
+}
+
+@screen lg {
+  .contentContainer {
+    @apply overflow-x-hidden;
+    height: 100vh;
+    width: 800px;
+  }
+}
+
+@screen xl {
+  contentContainer  {
+    @apply helperCont;
+  }
+}

@@ -1,0 +1,54 @@
+.triangle-left {
+  width: 0;
+  height: 0;
+
+  border-top: 70px solid transparent;
+  // border-bottom: 60px solid transparent;
+  border-left-width: 70px;
+  border-left-style: solid;
+}
+
+.border-right-black {
+  border-right-color: theme('colors.black');
+}
+
+
+.triangle-top-right {
+  width: 0;
+  height: 0;
+  border-bottom: 70px solid transparent;
+  border-top-color: transparent;
+  // border-bottom: 60px solid transparent;
+  border-right-width: 70px;
+  border-right-style: solid;
+}
+
+.triangle-right {
+  width: 0;
+  height: 0;
+  border-top: 70px solid transparent;
+  border-top-color: transparent;
+  // border-bottom: 60px solid transparent;
+  border-right-width: 70px;
+  border-right-style: solid;
+}
+
+
+.triangle-right-sm {
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent;
+  border-top-color: transparent;
+  // border-bottom: 60px solid transparent;
+  border-right-width: 50px;
+  border-right-style: solid;
+
+}
+
+.triangle-left-sm {
+  width: 0;
+  height: 0;
+  border-top-color: transparent;
+  border-left-width: 50px;
+  border-left-style: solid;
+}
