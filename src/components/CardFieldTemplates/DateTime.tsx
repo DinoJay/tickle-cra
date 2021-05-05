@@ -53,7 +53,6 @@ export const ModalContent: React.FC<{
 export const Preview: React.FC<{
   dateTime: DateTime;
   onClick: Function;
-  modalProps: any;
 }> = ({ dateTime, onClick }) => (
   <PreviewFrame
     placeholder="DateTime"

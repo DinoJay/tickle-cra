@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import ElementPanel from './ElementPanel';
-import Topic from 'constants/topicType';
+import Topic from '~/constants/topicType';
 
 interface TopicPanelProps {
   topicDict: Topic[];

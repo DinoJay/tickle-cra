@@ -1,19 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import sortBy from 'lodash/sortBy';
 import clsx from 'clsx';
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import Layers from 'react-feather/dist/icons/layers';
 import PreviewCard from '~/components/cards/PreviewCard';
-import {Card} from '~/constants/cardFields';
+import { Card } from '~/constants/cardFields';
 import distanceLoc from '~/components/utils/distanceLoc';
-import {avatarUrls} from '~/constants/avatars';
+import { avatarUrls } from '~/constants/avatars';
 
 import PreviewTag from '~/components/utils/PreviewTag';
-import {Line, ArrowDown} from './LineArrow';
+import { Line, ArrowDown } from './LineArrow';
 import SlideShow from './DiarySlideShow';
 
 const WP = props => {
-  const {selected, cards, id, onCardClick, title, img, topics} = props;
+  const { selected, cards, id, onCardClick, title, img, topics } = props;
   const [ext, setExt] = useState(false);
 
   const getCards = idd =>
@@ -27,6 +27,7 @@ const WP = props => {
       className="flex flex-col justify-center items-center w-full">
       <div className="relative">
         <PreviewCard
+          detail={false}
           onClick={() => onCardClick(id)}
           key={title}
           className="preview-card-size m-1 "
@@ -40,7 +41,7 @@ const WP = props => {
         />
         <div
           className="absolute flex items-center right-0 top-0 h-full"
-          style={{transform: 'translate(100%)'}}>
+          style={{ transform: 'translate(100%)' }}>
           <button
             type="button"
             onClick={() => setExt(!ext)}
@@ -96,7 +97,7 @@ const CardTimeLine: React.FC<any> = props => {
 
     const distance = loc1 ? calcDist(loc0, loc1) : null;
 
-    return {...c, distance};
+    return { ...c, distance };
   });
 
   const userDistance = waypoints.length
@@ -105,7 +106,7 @@ const CardTimeLine: React.FC<any> = props => {
 
   return (
     <motion.div
-      exit={{opacity: 0}}
+      exit={{ opacity: 0 }}
       className="flex-grow flex flex-col items-center">
       {!cards.length && <div>No Cards</div>}
       <img

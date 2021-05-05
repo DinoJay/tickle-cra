@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {max, group} from 'd3-array';
+import React, { useState, useEffect } from 'react';
+import { max, group } from 'd3-array';
 import uuid from 'uuid';
-import {timeParse} from 'd3-time-format';
-import {scaleLinear} from 'd3-scale';
+import { timeParse } from 'd3-time-format';
+import { scaleLinear } from 'd3-scale';
 import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
 import shuffle from 'lodash/shuffle';
@@ -12,12 +12,12 @@ import PreviewCard from '~/components/cards/PreviewCard';
 import useDeepCompareMemoize from '~/components/utils/useDeepCompareMemoize';
 
 import SelectTags from '~/components/utils/SelectTags';
-import {formatDay} from '~/components/utils/time';
+import { formatDay } from '~/components/utils/time';
 import distanceLoc from '~/components/utils/distanceLoc';
 import FlexCollapsible from '~/components/utils/FlexCollapsible';
 import setify from '~/components/utils/setify';
 
-import {BlackModal, ModalBody} from '~/components/utils/Modal';
+import { BlackModal, ModalBody } from '~/components/utils/Modal';
 
 import PreviewTag from '~/components/utils/PreviewTag';
 
@@ -52,13 +52,14 @@ const sort = cards =>
   );
 
 const Grid = props => {
-  const {cards, onRendered, size, onClick} = props;
+  const { cards, onRendered, size, onClick } = props;
 
-  const ref = React.useRef();
+  const ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
+    const children = ref?.current?.children ?? [];
     onRendered(
-      [...ref.current.children].map((c, i) => ({
+      [...children].map((c, i) => ({
         height: c.offsetHeight,
         width: c.offsetWidth,
         x: c.offsetLeft,
@@ -74,6 +75,7 @@ const Grid = props => {
       className="relative flex flex-wrap justify-center items-start">
       {cards.map((d, i) => (
         <PreviewCard
+          detail={false}
           key={d.id}
           onClick={() => onClick(d.id)}
           className="m-6"
@@ -91,8 +93,8 @@ const Grid = props => {
   );
 };
 
-const OneBubbleSet: React.SFC<any> = props => {
-  const {coords, color, opacity, altCards} = props;
+const OneBubbleSet: React.FC<any> = props => {
+  const { coords, color, opacity, altCards } = props;
   const pad = 0;
   const bubbles = new BubbleSet();
   const list = bubbles.createOutline(
@@ -113,11 +115,11 @@ const OneBubbleSet: React.SFC<any> = props => {
   );
 };
 
-const BubbleSets: React.FC<any> = props => {
-  const {nodes, size, colorMap} = props;
+const BubbleSets: any = props => {
+  const { nodes, size, colorMap } = props;
 
   const nestedSet = setify(nodes)
-    .map((d, i) => ({...d, color: colors[i]}))
+    .map((d, i) => ({ ...d, color: colors[i] }))
     .filter(d => d.count > 1);
 
   return nestedSet.map((d, i) => (
@@ -130,12 +132,12 @@ const BubbleSets: React.FC<any> = props => {
   ));
 };
 
-const BubbleSetsWrapper: React.SFC<any> = props => {
+const BubbleSetsWrapper: React.FC<any> = props => {
   const {
     open,
     onClick,
     style,
-    authUser: {uid},
+    authUser: { uid },
     locs,
     cards,
     onCardClick
@@ -146,7 +148,7 @@ const BubbleSetsWrapper: React.SFC<any> = props => {
   const [size, setSize] = useState(3);
 
   const nested = setify(sort(cards) as any)
-    .map((d, i) => ({...d, color: colors[i]}))
+    .map((d, i) => ({ ...d, color: colors[i] }))
     .filter(d => d.count > 1);
 
   const colorMap = nested.reduce((acc, d) => {
@@ -174,7 +176,7 @@ const BubbleSetsWrapper: React.SFC<any> = props => {
         <SelectTags
           className="bg-white flex-grow mt-1 mx-1"
           values={[
-            {id: 'all', title: 'All', cards: sort(cards)},
+            { id: 'all', title: 'All', cards: sort(cards) },
             ...nested
           ]}
           idAcc={d => d.id}
@@ -186,7 +188,7 @@ const BubbleSetsWrapper: React.SFC<any> = props => {
               <div>{d.title}</div>
               <div
                 className="w-6 h-6"
-                style={{background: d.color, opacity: 0.4}}
+                style={{ background: d.color, opacity: 0.4 }}
               />
             </div>
           )}

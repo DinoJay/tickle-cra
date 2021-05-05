@@ -18,8 +18,8 @@ const PreviewCard: React.FC<{
   img?: Img | null;
   style?: React.CSSProperties;
   onClick?: Function;
-  className: string;
-  detail: boolean
+  className?: string;
+  detail?: boolean
 
 }> = props => {
   const {

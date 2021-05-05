@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {timeParse} from 'd3-time-format';
+import React, { useState, useEffect } from 'react';
+import { timeParse } from 'd3-time-format';
 
-import {motion, AnimatePresence} from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 
 import PreviewCard from '~/components/cards/PreviewCard';
@@ -10,14 +10,14 @@ import FlexCollapsible from '~/components/utils/FlexCollapsible';
 // import DetailsFrame from '~/components/utils/DetailsFrame';
 // import PreviewTag from '~/components/utils/PreviewTag';
 import UserEnv from '~/constants/userEnvType';
-import {Card} from '~/constants/cardFields';
+import { Card } from '~/constants/cardFields';
 import Notification from '~/constants/notificationType';
 import AuthUser from '~/constants/authUserType';
 import Backlog from './Backlog';
 import CardDistLine from './CardDistLine';
 import CardTimeLine from './CardTimeLine';
 
-import {RouterTypes} from '~/constants/typeUtils';
+import { RouterTypes } from '~/constants/typeUtils';
 import RadioBtn from '~/components/utils/RadioBtn';
 import UserEnvSelect from './UserEnvSelect';
 import BubbleSetGrid from './BubbleSetGrid';
@@ -66,16 +66,17 @@ const filterCardsOnTime = (card: Card) => {
 };
 
 const CardGrid = props => {
-  const {cards, onCardClick, selectedCardId} = props;
+  const { cards, onCardClick, selectedCardId } = props;
 
   return (
     <motion.div
-      exit={{opacity: 0}}
+      exit={{ opacity: 0 }}
       className="flex-grow flex flex-wrap justify-center">
       {!cards.length && <div>No Cards</div>}
       {cards.map((d: Card) => (
         <AnimatePresence>
           <PreviewCard
+            detail={false}
             key={d.id}
             className="preview-card-size m-1"
             onClick={() => onCardClick(d.id)}
@@ -102,6 +103,8 @@ const CardView: React.FC<{
   onCardClick: Function;
   selectedCardId: string;
   className: string;
+  userLocation?: any;
+  width: number
 }> = props => {
   const {
     authUser,
@@ -137,7 +140,6 @@ const CardView: React.FC<{
 
   return (
     <FlexCollapsible
-      id="cards"
       className={clsx(
         `flex flex-grow flex-col overflow-hidden `,
         className
@@ -208,7 +210,7 @@ const CardView: React.FC<{
         <BubbleSetGrid
           key={!collected}
           {...props}
-          cards={filteredCards}
+          cards={filteredCards as any[]}
           onCardClick={onCardClick}
         />
       )}
@@ -246,10 +248,10 @@ const CardDiary: React.FC<CardDiaryTypes & RouterTypes> = props => {
 
   const smallLayout = width < 500;
   // console.log('smallLayout', smallLayout);
-  const {params} = match;
-  const {userEnvId} = params;
+  const { params } = match;
+  const { userEnvId } = params;
 
-  const {userEnvs, uid} = authUser;
+  const { userEnvs, uid } = authUser;
   const selectedUserEnv: UserEnv | undefined = userEnvs.find(
     (u: UserEnv) => u.id === userEnvId
   );
@@ -267,7 +269,7 @@ const CardDiary: React.FC<CardDiaryTypes & RouterTypes> = props => {
   });
 
   useEffect(() => {
-    fetchCollectibleCards({uid, userEnvId});
+    fetchCollectibleCards({ uid, userEnvId });
     fetchTopics(userEnvId);
   }, [userEnvId]);
 

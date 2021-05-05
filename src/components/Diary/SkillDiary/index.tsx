@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import AuthUser from '~/constants/authUserType';
-import {Card} from '~/constants/cardFields';
+import { Card } from '~/constants/cardFields';
 import UserEnv from '~/constants/userEnvType';
 import Reward from '~/constants/rewardType';
 import Topic from '~/constants/topicType';
@@ -25,6 +25,7 @@ const SkillDiary: React.FC<{
   ownedCards: Card[];
   updateAuthUser: Function;
   topicDict: Topic[];
+  routeCard: Function
 }> = props => {
   const {
     authUser,
@@ -35,7 +36,7 @@ const SkillDiary: React.FC<{
     topicDict
   } = props;
 
-  const {userEnvs, rewardIds: ownedRewardIds = []} = authUser;
+  const { userEnvs, rewardIds: ownedRewardIds = [] } = authUser;
 
   const [tabId, setTabId] = useState<string | null>(INTEREST_TAB_ID);
 
@@ -45,7 +46,7 @@ const SkillDiary: React.FC<{
   const selectedUserEnv: UserEnv | undefined = userEnvs.find(
     u => u.id === userEnvId
   );
-  const {rewards: allRewards} = selectedUserEnv || {rewards: []};
+  const { rewards: allRewards } = selectedUserEnv || { rewards: [] };
 
   const ownedRewards: Reward[] = ownedRewardIds.reduce(
     (acc: Reward[], id) => {

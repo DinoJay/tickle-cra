@@ -1,28 +1,28 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import sortBy from 'lodash/sortBy';
-import {motion, AnimatePresence} from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import MapIcon from 'react-feather/dist/icons/map';
 import Layers from 'react-feather/dist/icons/layers';
 import Plus from 'react-feather/dist/icons/plus';
 import Minus from 'react-feather/dist/icons/minus';
-import {scaleLinear} from 'd3-scale';
-import {extent} from 'd3-array';
-import {useInView} from 'react-intersection-observer';
-import {useSpring, animated} from 'react-spring';
+import { scaleLinear } from 'd3-scale';
+import { extent } from 'd3-array';
+import { useInView } from 'react-intersection-observer';
+import { useSpring, animated } from 'react-spring';
 import PreviewCard from '~/components/cards/PreviewCard';
-import {Card} from '~/constants/cardFields';
+import { Card } from '~/constants/cardFields';
 import distanceLoc from '~/components/utils/distanceLoc';
-import {avatarUrls} from '~/constants/avatars';
-import {formatTime} from '~/components/utils/time';
-import {Line, ArrowDown} from './LineArrow';
+import { avatarUrls } from '~/constants/avatars';
+import { formatTime } from '~/components/utils/time';
+import { Line, ArrowDown } from './LineArrow';
 import SlideShow from './DiarySlideShow';
 
-const LazyAnimation = ({children, className}) => {
+const LazyAnimation = ({ children, className }) => {
   const [ref, inView] = useInView({
     rootMargin: '-100px 0px'
   });
-  const props = useSpring({opacity: inView ? 1 : 0});
+  const props = useSpring({ opacity: inView ? 1 : 0 });
 
   return (
     <animated.div ref={ref} style={props} className={className}>
@@ -49,11 +49,11 @@ const TopicRecommendations = ({
       className="w-full overflow-hidden"
       animate={
         open
-          ? {height: 'auto', opacity: 1}
-          : {height: 0, opacity: 0, display: 'none'}
+          ? { height: 'auto', opacity: 1 }
+          : { height: 0, opacity: 0, display: 'none' }
       }
-      transition={{duration: 0.4}}
-      exit={{height: 0}}>
+      transition={{ duration: 0.4 }}
+      exit={{ height: 0 }}>
       <div className="flex flex-col items-center justify-center">
         <Line />
         <div className="">Topics</div>
@@ -96,14 +96,14 @@ const DistRecommendations = ({
     <motion.div
       className="w-full"
       key={id}
-      initial={{opacity: 0}}
+      initial={{ opacity: 0 }}
       animate={
         open
-          ? {opacity: 1, height: 'auto'}
-          : {opacity: 0, height: 0, display: 'none'}
+          ? { opacity: 1, height: 'auto' }
+          : { opacity: 0, height: 0, display: 'none' }
       }
-      transition={{duration: 0.4}}
-      exit={{opacity: 0}}>
+      transition={{ duration: 0.4 }}
+      exit={{ opacity: 0 }}>
       <div className="flex flex-col items-center justify-center">
         <Line />
         <div className="">Cards in proximity</div>
@@ -142,8 +142,9 @@ const WP = props => {
       className="flex flex-col items-center w-full">
       <motion.div layoutTransition className="relative">
         <PreviewCard
+          detail={false}
           className="m-1 "
-          onClick={() => setExt(!ext)}
+          onClick={() => { setExt(!ext ? null : ext) }}
           style={{
             minWidth: `${size}rem`,
             width: `${size}rem`,
@@ -159,7 +160,7 @@ const WP = props => {
         />
         <motion.div
           className="absolute right-0 top-0 flex flex-col justify-center h-full"
-          style={{transform: 'translate(100%)'}}>
+          style={{ transform: 'translate(100%)' }}>
           <button
             type="button"
             className={clsx(
@@ -231,7 +232,7 @@ const CardTimeLine: React.FC<any> = props => {
 
   const [size, setSize] = useState(7);
   const scale = scaleLinear()
-    .domain(extent(waypoints, d => d.distance))
+    .domain(extent(waypoints as any[], d => d.distance))
     .range([60, 200 - 300 / size]);
 
   // console.log
@@ -245,7 +246,7 @@ const CardTimeLine: React.FC<any> = props => {
 
   return (
     <motion.div
-      exit={{opacity: 0}}
+      exit={{ opacity: 0 }}
       className="w-full flex-grow flex flex-col items-center overflow-y-auto">
       <div className="absolute left-0">
         <button type="button" onClick={() => setSize(size + 1)}>
@@ -260,7 +261,7 @@ const CardTimeLine: React.FC<any> = props => {
         <>
           <img
             className="shadow-lg"
-            style={{width: `${size}rem`, minHeight: `${size}rem`}}
+            style={{ width: `${size}rem`, minHeight: `${size}rem` }}
             alt="usr"
             src={avatarUrls[authUser.avatar]}
           />
@@ -289,7 +290,7 @@ const CardTimeLine: React.FC<any> = props => {
           />
           {d.distance && (
             <motion.div
-              exit={{opacity: 0}}
+              exit={{ opacity: 0 }}
               layoutTransition
               key={`${d.id}kas`}
               className="flex flex-col items-center ">
