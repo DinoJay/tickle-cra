@@ -1,22 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import moment from 'moment';
-import {scaleLinear} from 'd3-scale';
-import {max, group} from 'd3-array';
-import uuid from 'uuid';
-import FlexCollapsible from '~/components/utils/FlexCollapsible';
-import {formatDay} from '~/components/utils/time';
-import PreviewCard from '~/components/cards/PreviewCard';
+import React, { useState, useEffect } from 'react';
+import { scaleLinear } from 'd3-scale';
+import { max, group } from 'd3-array';
+import { formatDay } from '~/components/utils/time';
 import clsx from 'clsx';
 
-import {BlackModal, ModalBody} from '~/components/utils/Modal';
+import { User } from '~/constants/userFields';
+import { doReadEventsFromUserInTime } from '~/firebase/db/event_db';
+import { Card } from '~/constants/cardFields';
 
-import PreviewTag from '~/components/utils/PreviewTag';
-
-import TagDetail from '~/components/utils/TagDetail';
-import {User} from '~/constants/userFields';
-import {doReadEventsFromUserInTime} from '~/firebase/db/event_db';
-
-moment.locale('be');
 const weekDays = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 
 // GET EVENT COUNTS
@@ -29,18 +20,19 @@ const Activities: React.SFC<{
   onClick: Function;
   style?: React.CSSProperties;
   className?: string;
+  cards: Card[]
 }> = props => {
   const {
     open,
     onClick,
     style,
-    authUser: {uid},
+    authUser: { uid },
     cards
   } = props;
 
   const activitySubs = cards
     .filter(c => c.activitySubmission)
-    .map(c => ({...c.activitySubmission, card: c}));
+    .map(c => ({ ...c.activitySubmission, card: c }));
 
   const nestedActivitySubs = [
     ...group(
@@ -50,7 +42,7 @@ const Activities: React.SFC<{
       })),
       d => d.day
     )
-  ].map(([key, values]) => ({key, values}));
+  ].map(([key, values]) => ({ key, values }));
   // console.log('nestedActivitySubs', nestedActivitySubs);
 
   const scale = scaleLinear()
@@ -84,7 +76,7 @@ const Activities: React.SFC<{
               <div
                 role="button"
                 className="bg-yellow-400 w-12 border-2 border-black"
-                style={{minHeight: `${scale(d.values.length)}%`}}
+                style={{ minHeight: `${scale(d.values.length)}%` }}
                 onClick={() =>
                   onClick(
                     d.values.filter(d => !d.succeeded).map(d => d.card)

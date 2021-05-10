@@ -1,8 +1,8 @@
 import Topic from '~/constants/topicType';
 import AuthUser from '~/constants/authUserType';
 import Notification from '~/constants/notificationType';
-import {Card} from '~/constants/cardFields';
-import {RouterTypes} from '~/constants/typeUtils';
+import { Card } from '~/constants/cardFields';
+import { RouterTypes } from '~/constants/typeUtils';
 
 export default interface UniqProps extends RouterTypes {
   cards: Card[];
@@ -15,4 +15,5 @@ export default interface UniqProps extends RouterTypes {
   topicDict: Topic[];
   updateAuthUser: Function;
   fetchTopics: () => Promise<any>;
+  locs: any[]
 }

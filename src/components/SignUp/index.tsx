@@ -1,33 +1,33 @@
-import React, {useState, useEffect} from 'react';
-import {Link, withRouter} from 'react-router-dom';
-import Redux, {bindActionCreators} from 'redux';
+import React, { useState, useEffect } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import Redux, { bindActionCreators } from 'redux';
 import Plus from 'react-feather/dist/icons/plus';
 import ChevronRight from 'react-feather/dist/icons/chevron-right';
 import ChevronLeft from 'react-feather/dist/icons/chevron-left';
 import clsx from 'clsx';
 
 import uniq from 'lodash/uniq';
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 
-import {compose} from 'recompose';
-import {connect} from 'react-redux';
-import {History, Match, Img} from '~/constants/typeUtils';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import { History, Match, Img } from '~/constants/typeUtils';
 import UserEnv from '~/constants/userEnvType';
 import Topic from '~/constants/topicType';
 // import {User} from '~/constants/userFields';
-import {BlackModal, ModalBody} from '~/components/utils/Modal';
+import { BlackModal, ModalBody } from '~/components/utils/Modal';
 
-import {avatars} from '~/constants/avatars';
+import { avatars } from '~/constants/avatars';
 
 import * as routes from '~/constants/routeSpec';
-import {CardsStateType} from '~/reducers/Cards';
+import { CardsStateType } from '~/reducers/Cards';
 
-import {PhotoPreview} from '~/components/utils/PhotoUpload';
+import { PhotoPreview } from '~/components/utils/PhotoUpload';
 
 import * as sessionActions from '~/reducers/Session/async_actions';
 import * as cardAsyncActions from '~/reducers/Cards/async_actions';
 import SelectTags from '~/components/utils/SelectTags';
-import {PrevBtn, NextBtn} from './PrevNextBtn';
+import { PrevBtn, NextBtn } from './PrevNextBtn';
 import styledComp from './styledComp';
 
 import DefaultLayout from '~/components/DefaultLayout';
@@ -41,11 +41,12 @@ import fuseBrusselsUrl from '~/styles/FuseBrussels.png';
 
 import validateEmail from '~/components/utils/validateEmail';
 
-import {doReadOneEnv} from '~/firebase/db/env_db';
+import { doReadOneEnv } from '~/firebase/db/env_db';
 
 // import TagDetail from '~/components/utils/TagDetail';
 import AppStateType from '~/reducers/appStateType';
 import Loading from '~/components/utils/Loading';
+import { User } from '~/constants/userFields';
 
 const EMAIL_ALREADY_IN_USE = 'auth/email-already-in-use';
 
@@ -60,22 +61,22 @@ const useScrollTo = (index: number, ref: any) => {
       if (el) {
         const offset = el.offsetLeft;
 
-        parentEl.scrollTo({left: offset, behavior: 'smooth'});
+        parentEl.scrollTo({ left: offset, behavior: 'smooth' });
       }
     }
   }, [index]);
-  return {ref};
+  return { ref };
 };
 
 const Alert: React.FC<any> = props => {
   const variants = {
     open: {
       y: '50vh',
-      transition: {ease: 'backInOut', delay: 0.3, duration: 0.4}
+      transition: { ease: 'backInOut', delay: 0.3, duration: 0.4 }
     },
     closed: {
       y: '-100vh',
-      transition: {ease: 'backInOut', duration: 0.4}
+      transition: { ease: 'backInOut', duration: 0.4 }
     }
   };
 
@@ -93,9 +94,9 @@ const Alert: React.FC<any> = props => {
 const rebootId = '65a5cea0-dae2-11e9-879a-c50279cf71aa';
 
 const SignUpPage: React.FC<any> = props => {
-  const {match, history} = props;
-  const {params} = match;
-  const {admin, userEnv: userEnvId} = params;
+  const { match, history } = props;
+  const { params } = match;
+  const { admin, userEnv: userEnvId } = params;
   const isAdmin = admin === 'admin';
 
   useEffect(() => {
@@ -136,7 +137,7 @@ const INITIAL_STATE = {
   passwordTwo: '',
   envIds: ['default'],
   error: null,
-  img: {url: null},
+  img: { url: null },
   interests: [],
   loading: false,
   avatar: avatars[0].id
@@ -150,7 +151,7 @@ const StyledInput: React.FC<{
   onChange: (event: ChangeEvent) => any;
   type: string;
   placeholder: string;
-}> = ({style, className, children, ...rest}) => (
+}> = ({ style, className, children, ...rest }) => (
   <div className={className} style={style}>
     <input
       className="w-full form-input border-4 border-black flex-grow mb-3 "
@@ -163,7 +164,7 @@ const FormGroup: React.FC<{
   style?: React.CSSProperties;
   className?: string;
   children: React.ReactNode;
-}> = ({style, className, children}) => (
+}> = ({ style, className, children }) => (
   <div
     className={`flex flex-col
       w-full px-8 py-4
@@ -211,7 +212,7 @@ const NameFormGroup: React.FC<{
       <StyledInput
         value={firstName || ''}
         onChange={(event: ChangeEvent) =>
-          setUserProfile({firstName: event.target.value})
+          setUserProfile({ firstName: event.target.value })
         }
         type="text"
         placeholder="First Name"
@@ -219,7 +220,7 @@ const NameFormGroup: React.FC<{
       <StyledInput
         value={lastName || ''}
         onChange={(event: ChangeEvent) =>
-          setUserProfile({lastName: event.target.value})
+          setUserProfile({ lastName: event.target.value })
         }
         type="text"
         placeholder="Last name"
@@ -246,7 +247,7 @@ const UserFormGroup: React.FC<{
   setUserProfile: Function;
   goPrevIndex: Function;
   goNextIndex: Function;
-}> = ({email, username, setUserProfile, goPrevIndex, goNextIndex}) => (
+}> = ({ email, username, setUserProfile, goPrevIndex, goNextIndex }) => (
   <FormGroup
     style={{
       backgroundImage: `url("${metroUrl}")`,
@@ -257,7 +258,7 @@ const UserFormGroup: React.FC<{
     <StyledInput
       value={username || ''}
       onChange={(event: ChangeEvent) =>
-        setUserProfile({username: event.target.value})
+        setUserProfile({ username: event.target.value })
       }
       type="text"
       placeholder="Username"
@@ -265,7 +266,7 @@ const UserFormGroup: React.FC<{
     <StyledInput
       value={email || ''}
       onChange={(event: ChangeEvent) => {
-        setUserProfile({email: event.target.value});
+        setUserProfile({ email: event.target.value });
       }}
       type="email"
       placeholder="Email Address"
@@ -393,7 +394,7 @@ const PasswordFormGroup: React.FC<{
       <StyledInput
         value={passwordOne}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setUserProfile({passwordOne: event.target.value})
+          setUserProfile({ passwordOne: event.target.value })
         }
         type="password"
         placeholder="Password"
@@ -401,7 +402,7 @@ const PasswordFormGroup: React.FC<{
       <StyledInput
         value={passwordTwo}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          setUserProfile({passwordTwo: event.target.value})
+          setUserProfile({ passwordTwo: event.target.value })
         }
         type="password"
         placeholder="Confirm Password"
@@ -419,7 +420,7 @@ const PasswordFormGroup: React.FC<{
 };
 
 const SlideShow: React.FC<any> = props => {
-  const {avatar, updateAvatar} = props;
+  const { avatar, updateAvatar } = props;
   const ref = React.useRef(null);
   const index = avatars.findIndex(a => avatar && a.id === avatar);
   useScrollTo(index, ref);
@@ -489,67 +490,67 @@ const AvatarFormGroup: React.FC<{
   updateAuthUser,
   onClick
 }) => {
-  const [modal, setModal] = useState<boolean>(false);
+    const [modal, setModal] = useState<boolean>(false);
 
-  const updateAvatar = av => {
-    setUserProfile({avatar:av});
-    updateAuthUser({...userProfile, avatar:av});
-  };
+    const updateAvatar = av => {
+      setUserProfile({ avatar: av });
+      updateAuthUser({ ...userProfile, avatar: av });
+    };
 
-  return (
-    <div className="flex-grow flex flex-col my-4 mx-4 items-center overflow-y-auto">
-      <div className="flex flex-grow flex-col w-full">
-        <BlackModal visible={modal}>
-          <ModalBody className="flex-grow" onClose={() => null}>
-            <div className="flex">
-              <button
-                className="btn text-white bg-yellow-500 p-2 flex-grow"
-                type="button"
-                onClick={() => setModal(false)}>
-                Back
+    return (
+      <div className="flex-grow flex flex-col my-4 mx-4 items-center overflow-y-auto">
+        <div className="flex flex-grow flex-col w-full">
+          <BlackModal visible={modal}>
+            <ModalBody className="flex-grow" onClose={() => null}>
+              <div className="flex">
+                <button
+                  className="btn text-white bg-yellow-500 p-2 flex-grow"
+                  type="button"
+                  onClick={() => setModal(false)}>
+                  Back
               </button>
-              <button
-                className="btn text-white bg-green-500 p-2 flex-grow"
-                type="button">
-                Select
+                <button
+                  className="btn text-white bg-green-500 p-2 flex-grow"
+                  type="button">
+                  Select
               </button>
-            </div>
-          </ModalBody>
-        </BlackModal>
-        <h1 className="mb-2">Avatar</h1>
-        <SlideShow avatar={avatar} updateAvatar={updateAvatar} />
-        <PhotoPreview
-          shrinkable={false}
-          edit
-          className="border-2 flex-grow mb-3 md:m-6"
-          style={{flexBasis: 200, maxHeight: 400}}
-          url={img ? img.url : undefined}
-          onChange={newImg => {
-            setUserProfile({img: newImg});
-          }}
-        />
-      </div>
-      <StyledNextBtn className="mx-2 mt-auto" onClick={onClick}>
-        Go!
+              </div>
+            </ModalBody>
+          </BlackModal>
+          <h1 className="mb-2">Avatar</h1>
+          <SlideShow avatar={avatar} updateAvatar={updateAvatar} />
+          <PhotoPreview
+            shrinkable={false}
+            edit
+            className="border-2 flex-grow mb-3 md:m-6"
+            style={{ flexBasis: 200, maxHeight: 400 }}
+            url={img ? img.url : undefined}
+            onChange={newImg => {
+              setUserProfile({ img: newImg });
+            }}
+          />
+        </div>
+        <StyledNextBtn className="mx-2 mt-auto" onClick={onClick}>
+          Go!
       </StyledNextBtn>
-    </div>
-  );
-};
+      </div>
+    );
+  };
 const SignUpForm: React.FC<
   | {
-      history: any;
-      admin: boolean;
-      signUp: Function;
-      updateAuthUser: Function;
-      userEnvId: string;
-      className: string;
-      fetchTopics: Function;
-      topicDict: Topic[];
-    }
+    history: any;
+    admin: boolean;
+    signUp: Function;
+    updateAuthUser: Function;
+    userEnvId: string;
+    className: string;
+    fetchTopics: Function;
+    topicDict: Topic[];
+  }
   | any
 > = props => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<{message: string} | any>(null);
+  const [error, setError] = useState<{ message: string } | any>(null);
   const [visibleTabIndex, setVisibleTabIndex] = useState(0);
 
   const {
@@ -591,7 +592,7 @@ const SignUpForm: React.FC<
           firstName !== '' &&
           lastName !== ''
         ) {
-          return {valid: true};
+          return { valid: true };
         }
         return {
           message: 'Please specifiy first and last name!',
@@ -599,20 +600,20 @@ const SignUpForm: React.FC<
         };
       }
       case 1: {
-        if (username && validateEmail(email)) return {valid: true};
+        if (username && validateEmail(email)) return { valid: true };
         return {
           message: 'Email or username are not valid',
           valid: false
         };
       }
       case 2:
-        return {valid: true};
+        return { valid: true };
       case 3: {
-        if (passwordOne === passwordTwo) return {valid: true};
-        return {message: 'Password not the same', valid: false};
+        if (passwordOne === passwordTwo) return { valid: true };
+        return { message: 'Password not the same', valid: false };
       }
       default:
-        return {valid: false};
+        return { valid: false };
     }
   })();
 
@@ -635,7 +636,7 @@ const SignUpForm: React.FC<
 
   const onSubmit = (event: any) => {
     event.preventDefault();
-    if (!access.valid) return setError({...access});
+    if (!access.valid) return setError({ ...access });
 
     setIsLoading(true);
 
@@ -649,7 +650,7 @@ const SignUpForm: React.FC<
       .then(() => {
         goNextIndex();
       })
-      .catch((err: {code: string}) => {
+      .catch((err: { code: string }) => {
         setIsLoading(false);
         if (err.code === EMAIL_ALREADY_IN_USE) {
           setVisibleTabIndex(1);
@@ -708,6 +709,7 @@ const SignUpForm: React.FC<
           setUserProfile={setUserProfile}
         />
         <AvatarFormGroup
+          userProfile={userProfile}
           updateAuthUser={updateAuthUser}
           setUserProfile={setUserProfile}
           avatar={avatar}
@@ -721,7 +723,7 @@ const SignUpForm: React.FC<
   );
 };
 
-const SignUpLink = ({userEnv}: {userEnv: string}) => (
+const SignUpLink = ({ userEnv }: { userEnv: string }) => (
   <div>
     <p className="mb-1">
       Do not have an account?{' '}
@@ -742,11 +744,11 @@ const SignUpLink = ({userEnv}: {userEnv: string}) => (
   </div>
 );
 
-const mapStateToProps = (state: AppStateType) => ({...state.Cards});
+const mapStateToProps = (state: AppStateType) => ({ ...state.Cards });
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch<any>): any =>
   bindActionCreators(
-    {...sessionActions, ...cardAsyncActions},
+    { ...sessionActions, ...cardAsyncActions },
     dispatch
   );
 
@@ -765,4 +767,4 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps, mergeProps)
 )(SignUpPage as any);
 
-export {SignUpForm, SignUpLink};
+export { SignUpForm, SignUpLink };

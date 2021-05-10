@@ -3,6 +3,7 @@ import React from 'react';
 import defIconSrc from '~/styles/alphabet_icons/ic_ak.svg';
 
 import DataElem from '~/constants/dataElemType';
+import { Card } from '~/constants/cardFields';
 
 const BarChart: React.FC<{
   data: DataElem[];
@@ -13,7 +14,7 @@ const BarChart: React.FC<{
   style?: React.CSSProperties;
   onClick?: Function;
   selectedId?: string;
-  sumAcc: Function;
+  cards: Card[]
 }> = props => {
   const {
     data,
@@ -24,7 +25,6 @@ const BarChart: React.FC<{
     style,
     onClick = (d: DataElem): DataElem => d,
     selectedId,
-    sumAcc,
     cards
   } = props;
 

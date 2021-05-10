@@ -1,17 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import uuidv1 from 'uuid/v1';
 
 import useDeepCompareMemoize from '~/components/utils/useDeepCompareMemoize';
 
-import {MapContext} from './index';
+import { MapContext } from './index';
 
-const Feature: React.FC<{
-  coordinates: [number, number][];
-  geometry?: object;
-}> = props => {
-  const {coordinates = [], geometry = {}} = props;
+const Feature: React.FC<any> = props => {
+  const { coordinates = [], geometry = {} } = props;
 
-  const {map} = React.useContext(MapContext);
+  const { map } = React.useContext(MapContext);
 
   useEffect(() => {
     const id = uuidv1();

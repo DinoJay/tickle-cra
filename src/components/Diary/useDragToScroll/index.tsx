@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import css from './style.scss';
 
 const useDragToScroll = ref => {
@@ -58,7 +58,7 @@ const useDragToScroll = ref => {
 
 export const useScrollTo = (
   focusRef: any,
-  ref: React.Ref<HTMLElement>,
+  ref: any,
   deps
 ) => {
   useEffect(() => {
@@ -80,7 +80,7 @@ export const useScrollTo = (
       }
     }
   }, deps);
-  return {ref};
+  return { ref };
 };
 
 export default useDragToScroll;

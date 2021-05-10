@@ -1,22 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import moment from 'moment';
-import {max, group} from 'd3-array';
-import uuid from 'uuid';
-import {timeParse} from 'd3-time-format';
+import React, { useState, useEffect } from 'react';
+import { max, group } from 'd3-array';
+import { timeParse } from 'd3-time-format';
 
-import {scaleLinear} from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 
-import {formatDay} from '~/components/utils/time';
+import { formatDay } from '~/components/utils/time';
 import distanceLoc from '~/components/utils/distanceLoc';
-import FlexCollapsible from '~/components/utils/FlexCollapsible';
 
-import {BlackModal, ModalBody} from '~/components/utils/Modal';
 
-import PreviewTag from '~/components/utils/PreviewTag';
-
-import TagDetail from '~/components/utils/TagDetail';
-import {User} from '~/constants/userFields';
-import {doReadEventsFromUserInTime} from '~/firebase/db/event_db';
+import { User } from '~/constants/userFields';
 
 // moment.locale('be');
 // const weekDays = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
@@ -31,12 +23,13 @@ const Activities: React.SFC<{
   onClick: Function;
   style?: React.CSSProperties;
   className?: string;
+  locs: any[]
 }> = props => {
   const {
     open,
     onClick,
     style,
-    authUser: {uid},
+    authUser: { uid },
     locs
   } = props;
 
@@ -49,7 +42,7 @@ const Activities: React.SFC<{
 
   const nestedLocs = [
     ...group(parsedLocs, d => d.day).entries()
-  ].map(([key, values]) => ({key, values}));
+  ].map(([key, values]) => ({ key, values }));
 
   const summedLocs = nestedLocs.map(d => ({
     ...d,
@@ -73,7 +66,7 @@ const Activities: React.SFC<{
           <div className="text-base">{(d.sum / 10).toFixed(3)}km</div>
           <div
             className="bg-yellow-400 w-12"
-            style={{minHeight: `${scale(d.sum)}%`}}
+            style={{ minHeight: `${scale(d.sum)}%` }}
           />
           <div className="text-base">{d.key}</div>
         </div>

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Topic from '~/constants/topicType.ts';
-import AuthUser from '~/constants/authUserType.ts';
+import Topic from '~/constants/topicType';
+import AuthUser from '~/constants/authUserType';
 
-import {Card, isActivitySucceeded} from '~/constants/cardFields';
+import { Card, isActivitySucceeded } from '~/constants/cardFields';
 
 import BarChart from './BarChart';
 import DataElem from '~/constants/dataElemType';
@@ -25,7 +25,7 @@ const InterestMenu: React.FC<{
   topicDict: Topic[];
   authUser: AuthUser;
 }> = props => {
-  const {cards, open, onClick, allXpoints} = props;
+  const { cards, open, onClick, allXpoints } = props;
 
   const succeededCards = cards.filter(isActivitySucceeded);
 

@@ -1,12 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import FlexCollapsible from '~/components/utils/FlexCollapsible';
 import PreviewCard from '~/components/cards/PreviewCard';
 
-import {BlackModal, ModalBody} from '~/components/utils/Modal';
+import { BlackModal, ModalBody } from '~/components/utils/Modal';
 
 import CardActivity from './CardActivity';
 import MovementActivity from './MovementActivity';
+import { User } from '~/constants/userFields';
+import { Card } from '~/constants/cardFields';
 
 const Activities: React.SFC<{
   authUser: User;
@@ -14,8 +16,11 @@ const Activities: React.SFC<{
   onClick: Function;
   style?: React.CSSProperties;
   className?: string;
+  routeCard: Function;
+  cards: Card[];
+  locs: any[]
 }> = props => {
-  const {open, onClick, style, routeCard} = props;
+  const { open, onClick, style, routeCard } = props;
 
   const [selected, setSelected] = useState(false);
   const [selectedCards, setSelectedCards] = useState(null);
@@ -53,8 +58,8 @@ const Activities: React.SFC<{
         {!selected ? (
           <CardActivity {...props} onClick={setSelectedCards} />
         ) : (
-          <MovementActivity {...props} />
-        )}
+            <MovementActivity {...props} />
+          )}
       </FlexCollapsible>
       <BlackModal visible={!!selectedCards}>
         <ModalBody
@@ -62,10 +67,10 @@ const Activities: React.SFC<{
           onClose={() => setSelectedCards(null)}
           title={
             selectedCards &&
-            selectedCards.every(
-              a =>
-                a.activitySubmission && a.activitySubmission.succeeded
-            )
+              selectedCards.every(
+                a =>
+                  a.activitySubmission && a.activitySubmission.succeeded
+              )
               ? 'Succeeded Cards'
               : 'Started Cards'
           }>

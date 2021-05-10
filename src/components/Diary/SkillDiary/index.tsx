@@ -25,7 +25,8 @@ const SkillDiary: React.FC<{
   ownedCards: Card[];
   updateAuthUser: Function;
   topicDict: Topic[];
-  routeCard: Function
+  routeCard: Function;
+  locs: any[]
 }> = props => {
   const {
     authUser,

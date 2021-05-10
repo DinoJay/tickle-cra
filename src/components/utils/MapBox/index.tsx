@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-import mapboxgl, {Map, MapMouseEvent} from 'mapbox-gl';
+import mapboxgl, { Map, MapMouseEvent } from 'mapbox-gl';
 import useDidUpdateEffect from '~/components/utils/useDidUpdateEffect';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -25,8 +25,8 @@ export const MapContext = React.createContext<MapContextInterface>({
 mapboxgl.accessToken = process.env.MapboxAccessToken as string;
 
 function withinRadius(
-  {x: x0, y: y0}: {x: number; y: number},
-  {x: x1, y: y1}: {x: number; y: number},
+  { x: x0, y: y0 }: { x: number; y: number },
+  { x: x1, y: y1 }: { x: number; y: number },
   r: number
 ): boolean {
   const dist = (x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1);
@@ -47,7 +47,7 @@ export const getViewport = (
   height: number;
 } => {
   // TODO
-  const {lng, lat} = m.getCenter();
+  const { lng, lat } = m.getCenter();
   return {
     zoom: +m.getZoom(),
     longitude: +lng,
@@ -65,21 +65,21 @@ export const shiftCenterMap = ({
   map: Map;
   latitude: number;
   longitude: number;
-}): {longitude: number; latitude: number} => {
+}): { longitude: number; latitude: number } => {
   const vp = getViewport(map);
 
-  const {height} = vp;
-  const {x, y} = map.project([oldLong, oldLat]);
+  const { height } = vp;
+  const { x, y } = map.project([oldLong, oldLat]);
 
-  const {lng: longitude, lat: latitude} = map.unproject([
+  const { lng: longitude, lat: latitude } = map.unproject([
     x,
     y - height / 8
   ]);
 
-  return {longitude, latitude};
+  return { longitude, latitude };
 };
 
-export {Marker, Directions, Feature, Circle};
+export { Marker, Directions, Feature, Circle };
 
 const useResetUpdate = (fn: Function, arr: any[], wait: number) => {
   const timeoutRef = useRef<any>();
@@ -92,20 +92,24 @@ const useResetUpdate = (fn: Function, arr: any[], wait: number) => {
   }, arr);
 };
 
-const MapBox: React.FC<{
+
+type MapBoxTypes = {
   style?: React.CSSProperties;
   className?: string;
   zoom: number;
   longitude: number;
   latitude: number;
-  children: React.ReactNode;
+  children: any;
   // onViewportChange:Function,
   cursor?: any;
   onClick?: Function;
   width?: number;
   height?: number;
   open?: boolean;
-}> = (props, ref: any) => {
+
+}
+
+const MapBox = (props, ref: any) => {
   const {
     style,
     className,
@@ -171,13 +175,13 @@ const MapBox: React.FC<{
         }
       })
       .on('click', (e: MapMouseEvent) => {
-        const {lng, lat} = e.lngLat;
+        const { lng, lat } = e.lngLat;
         // TODO
         const positions = layersRef.current.map(d => d._pos);
 
         if (positions.find(p => withinRadius(p, e.point, 20))) return;
 
-        onClick && onClick({longitude: lng, latitude: lat});
+        onClick && onClick({ longitude: lng, latitude: lat });
       })
       .on('load', () => {
         mapRef.current = m;
@@ -185,10 +189,10 @@ const MapBox: React.FC<{
         setMap(m);
         setLoaded(true);
       })
-      .on('flystart', function() {
+      .on('flystart', function () {
         flyingRef.current = true;
       })
-      .on('flyend', function() {
+      .on('flyend', function () {
         flyingRef.current = false;
       });
     if (ref) ref.current = m;
@@ -212,7 +216,7 @@ const MapBox: React.FC<{
         vp.latitude !== latitude ||
         vp.zoom !== zoom
       ) {
-        m.flyTo({center: [longitude, latitude]});
+        m.flyTo({ center: [longitude, latitude] });
       }
       return () => null;
     },
@@ -227,7 +231,7 @@ const MapBox: React.FC<{
         updateMap: () => null,
         layers: layersRef.current
       }}>
-      <div ref={contDomRef} style={{...style}} className={className} />
+      <div ref={contDomRef} style={{ ...style }} className={className} />
       {loaded && children}
     </MapContext.Provider>
   );
