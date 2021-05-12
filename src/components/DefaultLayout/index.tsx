@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {bindActionCreators, Dispatch} from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import clsx from 'clsx';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {screens} from 'Tailwind';
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import * as screenActions from '~/reducers/Screen/actions';
 import IcAk from '~/styles/alphabet_icons/ic_ak.svg';
 
@@ -20,15 +19,15 @@ import useClickOutside from '~/components/utils/useClickOutside';
 // import RootAction from '~/reducers/RootAction';
 
 const Draggable: React.FC<any> = props => {
-  const {dragConstraints} = props;
+  const { dragConstraints } = props;
   const variants = {
     closed: {
       x: '-120%',
-      transition: {ease: 'backInOut', duration: 0.3}
+      transition: { ease: 'backInOut', duration: 0.3 }
     },
     open: {
       x: '0%',
-      transition: {ease: 'backInOut', duration: 0.3}
+      transition: { ease: 'backInOut', duration: 0.3 }
     }
   };
 
@@ -51,7 +50,7 @@ const NavBar: React.FC<{
   ui: React.ReactNode;
   className?: string;
 }> = props => {
-  const {style, children, ui, className} = props;
+  const { style, children, ui, className } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -77,10 +76,10 @@ const NavBar: React.FC<{
     <div
       ref={draggableRef}
       className={`relative z-30 w-full ${className}`}
-      style={{...style}}>
+      style={{ ...style }}>
       <div
         className="navbar flex items-center relative m-2 w-full"
-        style={{minHeight: 48}}>
+        style={{ minHeight: 48 }}>
         <button
           className="border-4 shadow border-black cursor-pointer p-1 z-30 flex flex-col items-center bg-white"
           onClick={(): void => {
@@ -92,7 +91,7 @@ const NavBar: React.FC<{
         {ui}
       </div>
       <Draggable
-        dragConstraints={{left: -320, right: 0, top: 0, bottom: 0}}
+        dragConstraints={{ left: -320, right: 0, top: 0, bottom: 0 }}
         className="ml-2 absolute bg-white shadow border-2 border-black"
         onDragEnd={onDragEnd}
         animate={open ? 'open' : 'closed'}
@@ -183,11 +182,11 @@ const DefaultLayout: React.SFC<{
 
   return (
     <div
-      className={clsx('flex flex-col items-center w-full h-full')}
+      className={clsx('flex flex-col items-center flex-grow w-full h-full')}
       style={{}}>
       <div
         className={`${css.contentContainer} flex flex-col flex-grow ${className} md:w-3/4`}
-        style={{...style}}
+        style={{ ...style }}
         ref={ref}>
         <div className="flex flex-shrink-0 w-full">
           {authUser && navBarVisible && (
@@ -196,7 +195,7 @@ const DefaultLayout: React.SFC<{
                 {userEnv}
               </div>
               <RouteNavigation>
-                {({name}: {name: string}): string => name}
+                {({ name }: { name: string }): string => name}
               </RouteNavigation>
             </NavBar>
           )}

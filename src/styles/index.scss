@@ -12,6 +12,12 @@ body {
   // overflow: auto;
 }
 
+#root {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  // overflow: auto;
+}
 .mapboxgl-ctrl-bottom-left{
   left: 50% !important;
 }

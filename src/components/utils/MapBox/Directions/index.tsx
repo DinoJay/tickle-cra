@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import mbxDirections from '@mapbox/mapbox-sdk/services/directions';
-import {LngLatLike} from 'mapbox-gl';
+import { LngLatLike } from 'mapbox-gl';
 
 import useDeepCompareMemoize from '~/components/utils/useDeepCompareMemoize';
 
 import useDidUpdateEffect from '~/components/utils/useDidUpdateEffect';
 
-import {MapContext} from '../index';
+import { MapContext } from '../index';
 import Line from '../Line';
-import {LngLat} from '~/constants/cardFields';
+import { LngLat } from '~/constants/cardFields';
 
 const directionService = mbxDirections({
-  accessToken: process.env.MapboxAccessToken as string
+  accessToken: process.env.REACT_APP_MapboxAccessToken as string
 });
 
 const Directions: React.FC<{
@@ -31,17 +31,17 @@ const Directions: React.FC<{
     origin,
     onChange = () => null,
     destination,
-    bboxPadding = {top: 500, bottom: 80, left: 20, right: 20},
+    bboxPadding = { top: 500, bottom: 80, left: 20, right: 20 },
     fitBounds
   } = props;
-  const {map} = React.useContext(MapContext);
+  const { map } = React.useContext(MapContext);
   const startCoords = [origin.longitude, origin.latitude] as LngLatLike;
   const endCoords = [
     destination.longitude,
     destination.latitude
   ] as LngLatLike;
 
-  const [route, setRoute] = useState({coordinates: [], steps: []});
+  const [route, setRoute] = useState({ coordinates: [], steps: [] });
 
   useDidUpdateEffect(() => {
     onChange(route.steps);
@@ -66,11 +66,11 @@ const Directions: React.FC<{
       .getDirections(routeConf)
       .send()
       .then((response: any) => {
-        const {body} = response;
+        const { body } = response;
         const {
           routes: [
             {
-              geometry: {coordinates},
+              geometry: { coordinates },
               legs
             }
           ]
@@ -78,7 +78,7 @@ const Directions: React.FC<{
 
         const steps = legs ? legs[0] : [];
 
-        setRoute({coordinates, steps});
+        setRoute({ coordinates, steps });
 
         if (map && fitBounds)
           map.fitBounds([startCoords, endCoords], {

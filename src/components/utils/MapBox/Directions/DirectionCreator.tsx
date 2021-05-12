@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import polyline from '@mapbox/polyline';
 import mbxDirections from '@mapbox/mapbox-sdk/services/directions';
-import {MapMouseEvent} from 'mapbox-gl';
+import { MapMouseEvent } from 'mapbox-gl';
 
 // import GoToPlace from '~/components/utils/GoToPlace';
 
 import uuidv1 from 'uuid/v1';
 
-import {theme} from 'Tailwind';
+import { theme } from 'Tailwind';
 import useDidUpdateEffect from '~/components/utils/useDidUpdateEffect';
 import Marker from '../Marker';
 import Line from '../Line';
@@ -22,16 +22,16 @@ import abortPromise from '~/components/utils/abortPromise';
 import delay from '~/components/utils/delayPromise';
 
 // import useDidUpdateEffect from '~/components/utils/useDidUpdateEffect';
-import icons, {DefaultIcon} from './MapIcons';
+import icons, { DefaultIcon } from './MapIcons';
 
-import {MapContext} from '../index';
+import { MapContext } from '../index';
 
-import {WP, WPtype, DEFAULT} from './Waypoints';
+import { WP, WPtype, DEFAULT } from './Waypoints';
 
-const {colors} = theme;
+const { colors } = theme;
 
 const directionService = mbxDirections({
-  accessToken: process.env!.MapboxAccessToken!
+  accessToken: process.env!.REACT_APP_MapboxAccessToken!
 });
 export type Route = {
   id: string;
@@ -62,7 +62,7 @@ const MapBoxDirections: React.FC<MapBoxDirectionsType> = props => {
     draggable = true
   } = props;
 
-  const {map, layers} = React.useContext(MapContext);
+  const { map, layers } = React.useContext(MapContext);
 
   const routeGeometry = route.geometry
     ? polyline.decode(route.geometry).map(d => d.reverse())
@@ -71,7 +71,7 @@ const MapBoxDirections: React.FC<MapBoxDirectionsType> = props => {
   useEffect(() => {
     const waypointHandler = (e: MapMouseEvent) => {
       const invalidClick = layers.some(
-        (l: {_pos: {x: number; y: number}}) =>
+        (l: { _pos: { x: number; y: number } }) =>
           Math.abs(l._pos.x - e.point.x) < 20 &&
           Math.abs(l._pos.y - e.point.y) < 20
       );
@@ -97,18 +97,18 @@ const MapBoxDirections: React.FC<MapBoxDirectionsType> = props => {
 
   useDidUpdateEffect(() => {
     if (waypoints.length > 1) {
-      setRoute && setRoute({...route, loading: true});
+      setRoute && setRoute({ ...route, loading: true });
       const pr = abortPromise(
         delay(400).then(() =>
           directionService
             .getDirections({
               profile: 'walking',
-              waypoints: waypoints.map(w => ({coordinates: w.loc}))
+              waypoints: waypoints.map(w => ({ coordinates: w.loc }))
             })
             .send()
             .then(response => {
               const directions = response.body;
-              const {geometry} = directions.routes[0];
+              const { geometry } = directions.routes[0];
               setRoute &&
                 setRoute({
                   id: uuidv1(),
@@ -155,12 +155,12 @@ const MapBoxDirections: React.FC<MapBoxDirectionsType> = props => {
             {d.img && <img src={d.img.url} />}
           </div>
         ) : (
-          undefined
-        )
+            undefined
+          )
       }
-      onDragEnd={(nl: {latitude: number; longitude: number}) => {
+      onDragEnd={(nl: { latitude: number; longitude: number }) => {
         updateWayPoint &&
-          updateWayPoint({...d, loc: [nl.longitude, nl.latitude]});
+          updateWayPoint({ ...d, loc: [nl.longitude, nl.latitude] });
       }}
       longitude={d.loc[0]}
       latitude={d.loc[1]}
@@ -170,7 +170,7 @@ const MapBoxDirections: React.FC<MapBoxDirectionsType> = props => {
   const LineRoute = route && routeGeometry && (
     <Line
       coordinates={routeGeometry}
-      paint={{'line-color': colors.black, 'line-opacity': 0.5}}
+      paint={{ 'line-color': colors.black, 'line-opacity': 0.5 }}
     />
   );
 

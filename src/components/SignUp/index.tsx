@@ -679,7 +679,7 @@ const SignUpForm: React.FC<
       </Alert>
       <TabSlider
         visibleIndex={visibleTabIndex}
-        className="h-full flex-shrink-0 flex-grow flex flex-col">
+        className="">
         <NameFormGroup
           userEnvId={userEnvId}
           firstName={firstName}

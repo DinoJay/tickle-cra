@@ -1,10 +1,12 @@
-import firebase from '@firebase/app';
-import '@firebase/firestore';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 //
 // Add additional services you want to use
-import '@firebase/auth';
-import '@firebase/storage';
-import '@firebase/messaging';
+import 'firebase/auth';
+import 'firebase/storage';
+import 'firebase/messaging';
+
+// import { firestore as fs } from 'firebase';
 // require("firebase/database");
 // require("firebase/firestore");
 // require("firebase/messaging");
@@ -15,27 +17,16 @@ import '@firebase/messaging';
 
 import config from './firebase_api_keys.json';
 
-const app: {
-  // DocumentSnapshot: any;
-  name: any;
-  options: any;
-  automaticDataCollectionEnabled: any;
-  delete: any;
-  messaging: any;
-} = firebase.initializeApp(config);
+const app = firebase.initializeApp(config);
 
 const firestore: any = firebase.firestore!(app);
 
-const {Timestamp} = firebase.firestore!;
+const { Timestamp } = firebase.firestore!;
 
-const {DocumentSnapshot, QuerySnapshot} = firestore;
+const { DocumentSnapshot, QuerySnapshot } = firestore;
 
 export const DocumentSnapshotType = typeof DocumentSnapshot;
 export const QuerySnapshotType = typeof QuerySnapshot;
-
-// const settings = {/* your settings... */ timestampsInSnapshots: true};
-
-// firestore.settings(settings);
 
 const auth = firebase.auth!();
 
@@ -69,4 +60,4 @@ if (firebase.messaging!.isSupported()) {
 // );
 //
 
-export {firestore, Timestamp, auth, storageRef, messaging};
+export { firestore, Timestamp, auth, storageRef, messaging };

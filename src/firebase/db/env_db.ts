@@ -1,6 +1,5 @@
 import uniqBy from 'lodash/uniqBy';
 import flatten from 'lodash/flatten';
-import firebase from '@firebase/app';
 
 import {
   QuerySnapshot,
@@ -8,12 +7,12 @@ import {
   DocumentData
 } from '@firebase/firestore-types';
 
-import {firestore} from '../firebase';
+import { firestore } from '../firebase';
 
 import UserEnv from '~/constants/userEnvType';
 
 // TODO: that's a workaround
-const {FieldValue} = firebase.firestore as any;
+const FieldValue = firestore.FieldValue;
 
 export const doReadPublicEnvs = (): Promise<UserEnv>[] =>
   firestore
@@ -46,7 +45,7 @@ export const doReadPublicEnvs = (): Promise<UserEnv>[] =>
             //     cards: qs.docs.map(d => d.data())
             //   }))
           ]).then(res =>
-            res.reduce((acc, d) => ({...d, ...acc}), q.data())
+            res.reduce((acc, d) => ({ ...d, ...acc }), q.data())
           )
         )
       )
@@ -83,7 +82,7 @@ export const doReadEnvs = (uid: string) =>
             //     cards: qs.docs.map(d => d.data())
             //   }))
           ]).then(res =>
-            res.reduce((acc, d) => ({...d, ...acc}), q.data())
+            res.reduce((acc, d) => ({ ...d, ...acc }), q.data())
           )
         )
       )
@@ -112,7 +111,7 @@ export const doReadAvailableEnvs = (
 
 export const doCreateMapFeat = (
   userEnvId: string,
-  geoJson: {id: string}
+  geoJson: { id: string }
 ) =>
   geoFeatRefDb(userEnvId)
     .doc(geoJson.id)
@@ -178,7 +177,7 @@ export const doReadAllEnvs = () =>
             //     cards: qs.docs.map(d => d.data())
             //   }))
           ]).then(res =>
-            res.reduce((acc, d) => ({...d, ...acc}), q.data())
+            res.reduce((acc, d) => ({ ...d, ...acc }), q.data())
           )
         )
       )
@@ -213,7 +212,7 @@ export const doReadOneEnv = (id: string) =>
         //     cards: qs.docs.map(d => d.data())
         //   }))
       ]).then(res =>
-        res.reduce((acc, d) => ({...d, ...acc}), doc.data())
+        res.reduce((acc, d) => ({ ...d, ...acc }), doc.data())
       )
     );
 
@@ -231,7 +230,7 @@ export const doCreateEnv = ({
   firestore
     .collection('card-environments')
     .doc(id)
-    .set({id, authorId, name, description, img, ...rest});
+    .set({ id, authorId, name, description, img, ...rest });
 
 export const doDeleteEnv = (id: string) =>
   firestore

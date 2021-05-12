@@ -1,4 +1,3 @@
-import firebase from '@firebase/app';
 import {
   QuerySnapshot,
   DocumentSnapshot
@@ -6,22 +5,22 @@ import {
 } from '@firebase/firestore-types';
 
 import UserEnv from '~/constants/userEnvType';
-import {Card} from '~/constants/cardFields';
+import { Card } from '~/constants/cardFields';
 
-import {thumbFileName} from './utils_db';
-import {User, ExtendedUser} from '~/constants/userFields';
+import { thumbFileName } from './utils_db';
+import { User, ExtendedUser } from '~/constants/userFields';
 
-import {firestore, Timestamp, storageRef} from '../firebase';
+import { firestore, Timestamp, storageRef } from '../firebase';
 
 import makeCardFuncs from './card_db';
 
-const {FieldValue} = firebase.firestore!;
+const { FieldValue } = firestore;
 
 export const readAllUsers = (envId?: string) => {
   const fire = envId
     ? firestore
-        .collection('users')
-        .where('envIds', 'array-contains', envId)
+      .collection('users')
+      .where('envIds', 'array-contains', envId)
     : firestore.collection('users');
 
   return fire.get().then((querySnapshot: QuerySnapshot) => {
@@ -35,13 +34,13 @@ export const readAllUsers = (envId?: string) => {
       );
       // return d;
       return thumbNailRef.getDownloadURL().then(
-        url => ({...d, thumbnail: url}),
+        url => ({ ...d, thumbnail: url }),
         () => {
           // console.log('err', err);
           // TODO: check later
-          const img = {...d, thumbnail: null};
+          const img = { ...d, thumbnail: null };
 
-          return {...d, ...img};
+          return { ...d, ...img };
         }
       );
     });
@@ -118,7 +117,7 @@ export const doReadDetailUser = (uid: string): Promise<ExtendedUser> =>
     .then((doc: DocumentSnapshot) => {
       const usr = doc.data();
 
-      return {...usr, createdCards: [], collectedCards: []};
+      return { ...usr, createdCards: [], collectedCards: [] };
     });
 
 export const doReadOneUser = (uid: string): Promise<User> =>
@@ -198,7 +197,7 @@ export const getDetailedUserInfo = ({
   uid: string;
   userEnvId: string;
 }): Promise<User> => {
-  const {doReadCreatedCards} = makeCardFuncs(userEnvId);
+  const { doReadCreatedCards } = makeCardFuncs(userEnvId);
   return doReadOneUser(uid).then((usr: User) =>
     doReadCreatedCards(uid).then((createdCards: Card[]) => ({
       ...usr,
@@ -225,7 +224,7 @@ export const doInviteUser = (userProfile: User) =>
         return firestore
           .collection('tmp-users')
           .doc(userProfile.email)
-          .set({...userProfile, created: Timestamp.now()});
+          .set({ ...userProfile, created: Timestamp.now() });
       }
       // TODO check
       throw Error('User already exists');

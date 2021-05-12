@@ -100,7 +100,6 @@ interface SelectTagsProps {
   className?: string;
   ulClassName?: string;
   idAcc: Function;
-  placeholder: string;
   btnContent?: any;
   onChange?: Function;
   inputClassName?: string;

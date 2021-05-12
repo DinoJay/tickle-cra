@@ -20,7 +20,7 @@ smoothscroll.polyfill();
  * render the whole app to the DOM
  */
 const startApp = () => {
-  render(<App />, document.getElementById('app'));
+  render(<App />, document.getElementById('root'));
 
   const { messaging } = firebase;
   if (messaging && messaging.isSupported && messaging.isSupported()) {

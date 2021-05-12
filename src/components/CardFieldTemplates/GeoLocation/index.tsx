@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import mbxGeoCoding from '@mapbox/mapbox-sdk/services/geocoding';
 
-import {ModalBody, ModalProps} from '~/components/utils/Modal';
+import { ModalBody, ModalProps } from '~/components/utils/Modal';
 
-import {LOC, Loc, Card} from '~/constants/cardFields';
+import { LOC, Loc, Card } from '~/constants/cardFields';
 
 import PreviewFrame from '../PreviewFrame';
-import {EditLocationMap, ViewLocationMap} from './LocationMap';
+import { EditLocationMap, ViewLocationMap } from './LocationMap';
 
-import {reverseGeoCoding} from '~/components/utils/geocoding';
+import { reverseGeoCoding } from '~/components/utils/geocoding';
 
 import makeCancelable, {
   PromiseType
@@ -22,7 +22,7 @@ export const key = LOC;
 export const required = true;
 
 const geoCodingClient = mbxGeoCoding({
-  accessToken: process.env.MapboxAccessToken as string
+  accessToken: process.env.REACT_APP_MapboxAccessToken as string
 });
 
 const GeoLabel: React.FC<{
@@ -31,7 +31,7 @@ const GeoLabel: React.FC<{
   latitude: number;
   longitude: number;
 }> = props => {
-  const {className, style, latitude, longitude} = props;
+  const { className, style, latitude, longitude } = props;
 
   const promiseRef0 = React.useRef();
   const [name, setName] = useState();
@@ -41,8 +41,7 @@ const GeoLabel: React.FC<{
     if (pr0Current) pr0Current.cancel();
 
     fetch(
-      `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?types=poi&access_token=${
-        process.env.MapboxAccessToken
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?types=poi&access_token=${process.env.REACT_APP_MapboxAccessToken
       }`
     ).then(res => res.json().then(data => console.log('data', data)));
 
@@ -81,21 +80,21 @@ type EditLocationMapType = {
 export const ModalContent: React.FC<
   EditLocationMapType & Card
 > = props => {
-  const {modalProps, onChange, disabled} = props;
+  const { modalProps, onChange, disabled } = props;
 
   return (
     <ModalBody {...modalProps} className="flex flex-col flex-grow">
       {disabled ? (
         <ViewLocationMap {...props} className="flex-grow" />
       ) : (
-        <EditLocationMap
-          className="w-full flex-grow"
-          {...props}
-          onChange={(loc: object): void =>
-            onChange({key, label, value: loc})
-          }
-        />
-      )}
+          <EditLocationMap
+            className="w-full flex-grow"
+            {...props}
+            onChange={(loc: object): void =>
+              onChange({ key, label, value: loc })
+            }
+          />
+        )}
     </ModalBody>
   );
 };
@@ -106,7 +105,7 @@ type ViewType = {
 };
 
 export const View: React.FC<Card & ViewType> = props => {
-  const {modalProps, onClose, loc} = props;
+  const { modalProps, onClose, loc } = props;
 
   return (
     <ModalBody
@@ -119,13 +118,13 @@ export const View: React.FC<Card & ViewType> = props => {
   );
 };
 
-export const Preview: React.FC<{onClick: Function; loc: Loc}> = ({
+export const Preview: React.FC<{ onClick: Function; loc: Loc }> = ({
   onClick,
   loc
 }) => {
   const [locLabel, setLocLabel] = useState(null);
 
-  const {hidden, radius} = loc.value;
+  const { hidden, radius } = loc.value;
 
   useEffect(() => {
     if (loc.value) {
@@ -137,12 +136,12 @@ export const Preview: React.FC<{onClick: Function; loc: Loc}> = ({
       const pr = makeCancelable(
         delay(500)
           .then(() =>
-            fetch(reverseGeoCoding(lngLat)).then(function(response) {
+            fetch(reverseGeoCoding(lngLat)).then(function (response) {
               return response.json();
             })
           )
-          .then(function(resp: {results: any[]}) {
-            const {formatted_address} = resp.results[0];
+          .then(function (resp: { results: any[] }) {
+            const { formatted_address } = resp.results[0];
             if (formatted_address) setLocLabel(formatted_address);
           })
       );

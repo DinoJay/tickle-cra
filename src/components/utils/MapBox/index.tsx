@@ -22,7 +22,7 @@ export const MapContext = React.createContext<MapContextInterface>({
   layers: []
 });
 
-mapboxgl.accessToken = process.env.MapboxAccessToken as string;
+mapboxgl.accessToken = process.env.REACT_APP_MapboxAccessToken as string;
 
 function withinRadius(
   { x: x0, y: y0 }: { x: number; y: number },

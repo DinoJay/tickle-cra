@@ -41,12 +41,12 @@ export const fetchUser = (uid: string): ThunkActionType => (
     (usrInfo: User): Promise<SessionActionTypes> => {
       const profile = userFields(usrInfo);
       const prs = uniq(["default", ...profile.envIds]).map(doReadOneEnv);
-      return Promise.all(prs).then(userEnvs =>
+      return Promise.all(prs).then((userEnvs) =>
         dispatch(
           setAuthUserInfo({
             uid,
             ...profile,
-            userEnvs: userEnvs.filter(d => !!d.id)
+            userEnvs: (userEnvs as any).filter(d => !!d.id)
             // userEnvId: getState().Session.userEnvId
           })
         )
@@ -62,7 +62,7 @@ export const signIn = ({
   email: string;
   password: string;
 }) => (): Promise<unknown> =>
-  auth.doSignInWithEmailAndPassword(email, password);
+    auth.doSignInWithEmailAndPassword(email, password);
 
 export const fetchUsers = (userEnvId: string): ThunkActionType => (
   dispatch
@@ -116,7 +116,7 @@ export function registerUserToEnv({
   uid: string;
   envId: string;
 }): ThunkActionType {
-  return function(dispatch, getState: Function): Promise<void> {
+  return function (dispatch, getState: Function): Promise<void> {
     return doAddEnvToUser({ uid, envId }).then(() => {
       dispatch(insertUserIntoEnv({ uid, envId }));
 
@@ -204,7 +204,7 @@ export function removeUserFromEnv({
   uid: string;
   envId: string;
 }): ThunkActionType {
-  return function(dispatch: Function, getState: Function): Promise<void> {
+  return function (dispatch: Function, getState: Function): Promise<void> {
     return doRemoveEnvFromUser({ uid, envId }).then(() => {
       dispatch(deleteUserFromEnv({ uid, envId }));
       const { Session } = getState();

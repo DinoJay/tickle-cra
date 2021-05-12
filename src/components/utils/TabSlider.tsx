@@ -1,13 +1,15 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-const TabSlider: React.FC<{
+type TabSliderProps = {
   visibleIndex: number;
   className?: string;
   tabClassName?: string;
   style?: React.CSSProperties;
   draggable?: boolean;
   children: React.ReactNode | React.ReactNode[];
-}> = (props, externalRef: any) => {
+}
+
+const TabSlider: any = (props, externalRef: any) => {
   const {
     children,
     visibleIndex,
@@ -75,4 +77,5 @@ const TabSlider: React.FC<{
   );
 };
 
-export default React.forwardRef(TabSlider);
+export default React.forwardRef<any, any>(TabSlider);
+
